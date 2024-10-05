@@ -10,13 +10,13 @@ def get_minutes_per_conceded(row: pd.Series) -> pd.Series:
 
 
 def affordable_defs_for_year(year: int) -> pd.DataFrame:
-  gks = main.player_type_for_year(year, player_type="DEF")
-  played_gks = gks.loc[gks['minutes'] != 0]
+  defs = main.player_type_for_year(year, player_type="DEF")
+  played_defs = defs.loc[defs['minutes'] != 0]
 
-  played_gks[year] = played_gks.apply(get_minutes_per_conceded, axis=1)
-  played_gks.dropna(subset=[year], inplace=True)
-  best_gks = played_gks.sort_values(by=year, ascending=False)
-  return best_gks[['first_name', 'second_name', year]]
+  played_defs[year] = played_defs.apply(get_minutes_per_conceded, axis=1)
+  played_defs.dropna(subset=[year], inplace=True)
+  best_defs = played_defs.sort_values(by=year, ascending=False)
+  return best_defs[['first_name', 'second_name', year]]
 
 
 def expected_vs_actual_goals_conceded(player: pd.Series) -> pd.Series:
@@ -35,13 +35,13 @@ def get_assists_per_minute(row: pd.Series) -> pd.Series:
   return row['assists'] / row['minutes']
 
 def affordable_support_defs_for_year(year: int) -> pd.DataFrame:
-  gks = main.player_type_for_year(year, player_type="DEF")
-  played_gks = gks.loc[gks['minutes'] != 0]
+  defs = main.player_type_for_year(year, player_type="DEF")
+  played_defs = defs.loc[defs['minutes'] != 0]
 
-  played_gks[year] = played_gks.apply(get_assists_per_minute, axis=1)
-  played_gks.dropna(subset=[year], inplace=True)
-  best_gks = played_gks.sort_values(by=year, ascending=False)
-  return best_gks[['first_name', 'second_name', year]]
+  played_defs[year] = played_defs.apply(get_assists_per_minute, axis=1)
+  played_defs.dropna(subset=[year], inplace=True)
+  best_defs = played_defs.sort_values(by=year, ascending=False)
+  return best_defs[['first_name', 'second_name', year]]
 
 def expected_vs_actual_assists(player: pd.Series) -> pd.Series:
   expected_vs_actual_assists = np.nan
